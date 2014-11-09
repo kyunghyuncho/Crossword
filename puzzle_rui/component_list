@@ -1,0 +1,6 @@
+../components/state_capital_component.py	1
+../components/lucene_cwg_component.py	1
+../components/lucene_otsys_component.py	1
+../components/lucene_wiki_component.py	1
+../components/wordnet_antonym_component.py	1
+../components/fill_in_the_blank_component.py	1
