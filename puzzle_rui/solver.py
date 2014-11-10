@@ -226,16 +226,15 @@ def solve_recursive(puz, variables, domains, neighbors, S, B, Pitched, n):
 
     unassigned_vars = list( set(variables) - set(S.keys()) )   
     
-    max2_next_var = None
+    next_var = None
+    max2_diff = - float('Inf')
     for var in unassigned_vars:
-        weight_dict[var]
+        values = weight_dict[var].values()
+        values_diff = max(values) - select(values, 1)
+        if values_diff > max2_diff:
+            max2_diff = values_diff
+            next_var = var
     
-    
-    next_var = unassigned_vars[0]
-    print weight_dict[next_var]
-
-    raw_input('weight[next_var')
-
     if (len(domains[next_var])==0):
         S[next_var] = '-'*puz.entries[next_var].length
         for k in S.keys():
