@@ -19,6 +19,8 @@ import csp.csp as csp
 import puzzle
 import copy
 from component_thread import myThread
+from matplotlib.font_manager import weight_dict
+from __builtin__ import exit
 
 # @param puz the puzzle object
 # @param candidates_file input file of candidate answers
@@ -214,7 +216,7 @@ def propagate(next_var, next_val, puz, domains, neighbors, S):
 
 
 # A crude search algorithm
-def solve_recursive(puz,variables,domains,neighbors,S):
+def solve_recursive(puz, variables, domains, neighbors, S, B, Pitched, n):
     # print 'calling solve_recursive.....'
 
     # If all variables assgined, update solution
@@ -223,17 +225,26 @@ def solve_recursive(puz,variables,domains,neighbors,S):
         return S
 
     unassigned_vars = list( set(variables) - set(S.keys()) )   
+    
+    max2_next_var = None
+    for var in unassigned_vars:
+        weight_dict[var]
+    
+    
     next_var = unassigned_vars[0]
+    print weight_dict[next_var]
+
+    raw_input('weight[next_var')
 
     if (len(domains[next_var])==0):
         S[next_var] = '-'*puz.entries[next_var].length
         for k in S.keys():
             S = puz.update_solution(S,k) 
-        return solve_recursive(puz,variables,domains,neighbors,S)
+        return solve_recursive(puz,variables,domains,neighbors,S, {}, {}, 0)
     else:
         next_val = domains[next_var][0]
         success, next_domains, next_S = propagate(next_var,next_val,puz,domains,neighbors,S)
-        return solve_recursive(puz,variables,next_domains,neighbors,next_S)
+        return solve_recursive(puz,variables,next_domains,neighbors,next_S, {}, {}, 0)
 
 
 ## Find a solution to the puzzle
@@ -241,19 +252,10 @@ def solve_puzzle(puz,component_output,mode,limit,score_adjust,second_round=True)
     if puz.is_rebus:
         raise RebusError("Solver cannot handle rebus style puzzles")
 
-    print "################### Entering solve_puzzle_rec #######"
-    print score_adjust
-    raw_input('score_adjust')
-
+    global weight_dict
     puz.update_all_intersections()
     domains,weight_dict,unanswered_clues = generate_all_candidates(puz,limit,score_adjust,component_output)
     
-    print weight_dict
-    raw_input('weight_dict')
-    print unanswered_clues
-    raw_input('unanswered_clues')
-    
- 
     # construct CSP problem
     problem = csp.CSP(puz.entries.keys(),
                       domains,
@@ -270,7 +272,7 @@ def solve_puzzle(puz,component_output,mode,limit,score_adjust,second_round=True)
 
     print "\nSolving CSP probelm ....."
     start = time.time()
-    solution = solve_recursive(puz,variables,domains,neighbors,S)
+    solution = solve_recursive(puz,variables,domains,neighbors,S, {}, {}, 0)
     end = time.time()
     print("\nCSP solver runtime: " + str(end-start))
 
@@ -299,6 +301,44 @@ def arg_parse():
     parser.add_argument('candidates_file', metavar='candidates_file', type=str,
                         help='path to component output to use when generating candidate answers')
     return parser.parse_args()
+
+#--- quickselect algorithm from Rosetta Code ----
+def partition(vector, left, right, pivotIndex):
+    pivotValue = vector[pivotIndex]
+    vector[pivotIndex], vector[right] = vector[right], vector[pivotIndex]  # Move pivot to end
+    storeIndex = left
+    for i in range(left, right):
+        if vector[i] > pivotValue:
+            vector[storeIndex], vector[i] = vector[i], vector[storeIndex]
+            storeIndex += 1
+    vector[right], vector[storeIndex] = vector[storeIndex], vector[right]  # Move pivot to its final place
+    return storeIndex
+ 
+def _select(vector, left, right, k):
+    while True:
+        pivotIndex = random.randint(left, right)     # select pivotIndex between left and right
+        pivotNewIndex = partition(vector, left, right, pivotIndex)
+        pivotDist = pivotNewIndex - left
+        if pivotDist == k:
+            return vector[pivotNewIndex]
+        elif k < pivotDist:
+            right = pivotNewIndex - 1
+        else:
+            k -= pivotDist + 1
+            left = pivotNewIndex + 1
+ 
+def select(vector, k, left=None, right=None):
+    """\
+    Returns the k-th largest, (k >= 0), element of vector within vector[left:right+1].
+    left, right default to (0, len(vector) - 1) if omitted
+    """
+    if left is None:
+        left = 0
+    lv1 = len(vector) - 1
+    if right is None:
+        right = lv1
+    return _select(vector, left, right, k)
+#----- End of quickselect -----
 
 if __name__ == "__main__":
     args = arg_parse()
