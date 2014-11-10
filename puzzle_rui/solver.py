@@ -224,9 +224,8 @@ def solve_recursive(puz, variables, domains, neighbors, S, B, Pitched, n):
         print "CSP complete"
         # might be empy (unanswered_clues)
         scoreS = sum([weight_dict.get(sq, {}).get(S[sq], 0) for sq in S])
-#         scoreB = sum([weight_dict[sq].get(B[sq], 0) for sq in S])
-#         return S if scoreS > scoreB else B
-        return S
+        scoreB = sum([weight_dict.get(sq, {}).get(B[sq], 0) for sq in B])
+        return S if scoreS > scoreB else B
 
     unassigned_vars = list( set(variables) - set(S.keys()) )   
     
@@ -243,12 +242,27 @@ def solve_recursive(puz, variables, domains, neighbors, S, B, Pitched, n):
         S[next_var] = '-'*puz.entries[next_var].length
         for k in S.keys():
             S = puz.update_solution(S,k) 
-        return solve_recursive(puz,variables,domains,neighbors,S, {}, {}, 0)
+        return solve_recursive(puz,variables,domains,neighbors,S, B, Pitched, n)
     else:
-        next_val = domains[next_var][0]
+        i = 0
+        while (next_var, domains[next_var][i]) in Pitched:
+            i += 1
+        if i < len(domains[next_var]):
+            next_val = domains[next_var][i]
+        else: # everything is in pitched
+            S[next_var] = '-'*puz.entries[next_var].length
+            for k in S.keys():
+                S = puz.update_solution(S,k) 
+            return solve_recursive(puz,variables,domains,neighbors,S, B, Pitched, n)
+        
         success, next_domains, next_S = propagate(next_var,next_val,puz,domains,neighbors,S)
         
-        return solve_recursive(puz,variables,next_domains,neighbors,next_S, {}, {}, 0)
+        if success:
+            B = solve_recursive(puz, variables, next_domains, neighbors, next_S, B, Pitched, n)
+        if len(Pitched) < n:
+            Pitched.add((next_var, next_val))
+            B = solve_recursive(puz, variables, domains, neighbors, S, B, Pitched, n)
+        return B
 
 
 ## Find a solution to the puzzle
@@ -276,7 +290,7 @@ def solve_puzzle(puz,component_output,mode,limit,score_adjust,second_round=True)
 
     print "\nSolving CSP probelm ....."
     start = time.time()
-    solution = solve_recursive(puz,variables,domains,neighbors,S, {}, {}, 0)
+    solution = solve_recursive(puz,variables,domains,neighbors,S, {}, set(), 3)
     end = time.time()
     print("\nCSP solver runtime: " + str(end-start))
 
@@ -336,6 +350,8 @@ def select(vector, k, left=None, right=None):
     Returns the k-th largest, (k >= 0), element of vector within vector[left:right+1].
     left, right default to (0, len(vector) - 1) if omitted
     """
+    if k >= len(vector):
+        return 0
     if left is None:
         left = 0
     lv1 = len(vector) - 1
