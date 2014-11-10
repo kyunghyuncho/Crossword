@@ -245,16 +245,7 @@ def solve_recursive(puz, variables, domains, neighbors, S, B, Pitched, n):
             S = puz.update_solution(S,k) 
         return solve_recursive(puz,variables,domains,neighbors,S, {}, {}, 0)
     else:
-        next_val_max_score = -float('Inf')
         next_val = domains[next_var][0]
-        print domains[next_var]
-        for val in domains[next_var]:
-            val_score = weight_dict[next_var].get(val)
-            print val_score
-            if val_score is not None and val_score > next_val_max_score:
-                next_val_max_score = val_score
-                next_val = val
-        
         success, next_domains, next_S = propagate(next_var,next_val,puz,domains,neighbors,S)
         
         return solve_recursive(puz,variables,next_domains,neighbors,next_S, {}, {}, 0)
