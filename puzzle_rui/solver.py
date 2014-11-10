@@ -33,7 +33,7 @@ def generate_all_candidates(puz,limit,score_adjust,candidates_output=None):
         data = sys.stdin()
     answers_given = {}
     for line in data:
-        print "line", line
+#         print "line", line
         if line == "":
             continue
         clue_id = None
@@ -241,8 +241,18 @@ def solve_puzzle(puz,component_output,mode,limit,score_adjust,second_round=True)
     if puz.is_rebus:
         raise RebusError("Solver cannot handle rebus style puzzles")
 
+    print "################### Entering solve_puzzle_rec #######"
+    print score_adjust
+    raw_input('score_adjust')
+
     puz.update_all_intersections()
     domains,weight_dict,unanswered_clues = generate_all_candidates(puz,limit,score_adjust,component_output)
+    
+    print weight_dict
+    raw_input('weight_dict')
+    print unanswered_clues
+    raw_input('unanswered_clues')
+    
  
     # construct CSP problem
     problem = csp.CSP(puz.entries.keys(),
