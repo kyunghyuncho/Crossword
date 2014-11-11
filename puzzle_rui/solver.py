@@ -19,8 +19,6 @@ import csp.csp as csp
 import puzzle
 import copy
 from component_thread import myThread
-from matplotlib.font_manager import weight_dict
-from __builtin__ import exit
 
 # @param puz the puzzle object
 # @param candidates_file input file of candidate answers
@@ -221,7 +219,6 @@ def solve_recursive(puz, variables, domains, neighbors, S, B, Pitched, n):
 
     # If all variables assgined, update solution
     if len(variables) == len(S.keys()):
-        print "CSP complete"
         # might be empy (unanswered_clues)
         scoreS = sum([weight_dict.get(sq, {}).get(S[sq], 0) for sq in S])
         scoreB = sum([weight_dict.get(sq, {}).get(B[sq], 0) for sq in B])
@@ -229,39 +226,52 @@ def solve_recursive(puz, variables, domains, neighbors, S, B, Pitched, n):
 
     unassigned_vars = list( set(variables) - set(S.keys()) )   
     
-    next_var = None
+    localPitched = copy.deepcopy(Pitched)
+
+    next_var = unassigned_vars[0]
     max2_diff = - float('Inf')
     for var in unassigned_vars:
+        if var in Pitched and set(domains[var]) == localPitched.get(var, set()):
+#             print set(domains[var])
+#             print localPitched.get(var) 
+#             print unassigned_vars
+#             raw_input('shit')
+            continue
         values = weight_dict[var].values()
         values_diff = max(values) - select(values, 1)
         if values_diff > max2_diff:
             max2_diff = values_diff
             next_var = var
     
-    if (len(domains[next_var])==0):
+    if next_var is None or len(domains[next_var])==0:
         S[next_var] = '-'*puz.entries[next_var].length
         for k in S.keys():
             S = puz.update_solution(S,k) 
-        return solve_recursive(puz,variables,domains,neighbors,S, B, Pitched, n)
+        return solve_recursive(puz,variables,domains,neighbors,S, B, localPitched, n)
     else:
         i = 0
-        while (next_var, domains[next_var][i]) in Pitched:
+        while domains[next_var][i] in localPitched.get(next_var, []):
             i += 1
-        if i < len(domains[next_var]):
-            next_val = domains[next_var][i]
-        else: # everything is in pitched
-            S[next_var] = '-'*puz.entries[next_var].length
-            for k in S.keys():
-                S = puz.update_solution(S,k) 
-            return solve_recursive(puz,variables,domains,neighbors,S, B, Pitched, n)
+            if i == len(domains[next_var]):
+                # everything is in pitched
+                S[next_var] = '-'*puz.entries[next_var].length
+                for k in S.keys():
+                    S = puz.update_solution(S,k) 
+                return solve_recursive(puz,variables,domains,neighbors,S, B, localPitched, n)
+
+        next_val = domains[next_var][i]
         
         success, next_domains, next_S = propagate(next_var,next_val,puz,domains,neighbors,S)
         
+        B = copy.deepcopy(B)
         if success:
-            B = solve_recursive(puz, variables, next_domains, neighbors, next_S, B, Pitched, n)
-        if len(Pitched) < n:
-            Pitched.add((next_var, next_val))
-            B = solve_recursive(puz, variables, domains, neighbors, S, B, Pitched, n)
+            B = solve_recursive(puz, variables, next_domains, neighbors, next_S, B, localPitched, n)
+        if sum(len(localPitched[key]) for key in localPitched) < n:
+            if next_var in localPitched:
+                localPitched[next_var].add(next_val)
+            else:
+                localPitched[next_var] = {next_val}
+            B = solve_recursive(puz, variables, domains, neighbors, S, B, localPitched, n)
         return B
 
 
@@ -290,7 +300,7 @@ def solve_puzzle(puz,component_output,mode,limit,score_adjust,second_round=True)
 
     print "\nSolving CSP probelm ....."
     start = time.time()
-    solution = solve_recursive(puz,variables,domains,neighbors,S, {}, set(), 3)
+    solution = solve_recursive(puz,variables,domains,neighbors,S, {}, {}, 2)
     end = time.time()
     print("\nCSP solver runtime: " + str(end-start))
 
