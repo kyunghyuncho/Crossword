@@ -271,7 +271,7 @@ def solve_recursive(puz, variables, domains, neighbors, S, B, Pitched, n):
 
 
 ## Find a solution to the puzzle
-def solve_puzzle(puz,component_output,mode,limit,score_adjust,second_round=True):
+def solve_puzzle(puz,component_output,mode,limit,score_adjust, n=1, second_round=True):
     if puz.is_rebus:
         raise RebusError("Solver cannot handle rebus style puzzles")
 
@@ -295,7 +295,7 @@ def solve_puzzle(puz,component_output,mode,limit,score_adjust,second_round=True)
 
     print "\nSolving CSP probelm ....."
     start = time.time()
-    solution = solve_recursive(puz,variables,domains,neighbors,S, {}, {}, 2)
+    solution = solve_recursive(puz,variables,domains,neighbors,S, {}, {}, n)
     end = time.time()
     print("\nCSP solver runtime: " + str(end-start))
 
