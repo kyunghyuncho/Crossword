@@ -270,6 +270,47 @@ def solve_recursive(puz, variables, domains, neighbors, S, B, Pitched, n):
         return B
 
 
+## Second round: fill in the blanks
+def fill_blanks(S, all_dict, puz,domains,neighbors):
+    for sq in S:
+        cur = S[sq] # current solution with dashes
+        if not '-' in cur: # cur is fully filled
+            continue
+        candidates = all_dict[len(cur)]
+        for cand in candidates:
+            match = True
+            for i in range(len(cand)):
+                if cur[i] != '-' and cur[i] != cand[i]:
+                    match = False
+                    break
+            if match:
+                print 'old', cur
+                print 'now', cand
+                raw_input('match u forker')
+                _, domains, S = propagate(sq, cand, puz, domains, neighbors, S)
+                break
+    return S
+
+
+## Pre-process answers_cwg_otsys.txt
+# hash length to an array of words
+def preprocess_db(filename):
+    # dictionary of all crossword solutions
+    all_dict = {}
+    for word in open(filename):
+        word = word.strip()
+        l = len(word)
+        if l in all_dict:
+            all_dict[l].append(word)
+        else:
+            all_dict[l] = [word]
+    return all_dict
+
+## generate 'domain' of fill-blank
+def gen_blank_domain(S):
+    pass
+
+
 ## Find a solution to the puzzle
 def solve_puzzle(puz,component_output,mode,limit,score_adjust, n=1, second_round=True):
     if puz.is_rebus:
@@ -305,10 +346,16 @@ def solve_puzzle(puz,component_output,mode,limit,score_adjust, n=1, second_round
     evaluation['runtime_before_fill'] = end-start
 
     # PART 2 GOES HERE - FILL IN BLANK SQUARES
-
-    # UNCOMMENT THESE LINES WHEN NEEDED
-    #print "\nEvaluating filled solution ...."
-    #evaluation = puz.evaluate_solution(problem,solution,'_after_fill')
+    if second_round:
+        all_dict = preprocess_db('../answers_cwg_otsys.txt')
+        domains,_,_ = generate_all_candidates(puz,limit,score_adjust,component_output)
+        orig = copy.deepcopy(solution)
+        solution = fill_blanks(solution, all_dict, puz, domains, neighbors)
+        for sq in orig:
+            if orig[sq] != solution[sq]:
+                print orig[sq], 'vs', solution[sq]
+        print "\nEvaluating filled solution ...."
+        evaluation = puz.evaluate_solution(problem,solution,'_after_fill')
 
     end2 = time.time()
     print("\nBlank square filling runtime: " + str(end2-start))
