@@ -271,24 +271,17 @@ def solve_recursive(puz, variables, domains, neighbors, S, B, Pitched, n):
 
 
 ## Second round: fill in the blanks
-def fill_blanks(S, all_dict, puz,domains,neighbors):
+def fill_blanks(S, puz,domains,neighbors):
     for sq in S:
-        cur = S[sq] # current solution with dashes
-        if not '-' in cur: # cur is fully filled
+        if domains is None:
+            break
+        num_cand = len(domains[sq])
+        if  num_cand == 0:
             continue
-        candidates = all_dict[len(cur)]
-        for cand in candidates:
-            match = True
-            for i in range(len(cand)):
-                if cur[i] != '-' and cur[i] != cand[i]:
-                    match = False
-                    break
-            if match:
-                print 'old', cur
-                print 'now', cand
-                raw_input('match u forker')
-                _, domains, S = propagate(sq, cand, puz, domains, neighbors, S)
-                break
+        fill_word = domains[sq][random.randint(0, num_cand-1)]
+        success, domains, next_S = propagate(sq, fill_word, puz, domains, neighbors, S)
+        if success:
+            S = next_S
     return S
 
 
@@ -307,8 +300,23 @@ def preprocess_db(filename):
     return all_dict
 
 ## generate 'domain' of fill-blank
-def gen_blank_domain(S):
-    pass
+def gen_blank_domain(S, all_dict):
+    domain = {}
+    for sq in S:
+        cur = S[sq] # current solution with dashes
+        domain[sq] = []
+        if not '-' in cur: # cur is fully filled
+            continue
+        candidates = all_dict[len(cur)]
+        for cand in candidates:
+            match = True
+            for i in range(len(cand)):
+                if cur[i] != '-' and cur[i] != cand[i]:
+                    match = False
+                    break
+            if match:
+                domain[sq].append(cand)
+    return domain
 
 
 ## Find a solution to the puzzle
@@ -348,9 +356,9 @@ def solve_puzzle(puz,component_output,mode,limit,score_adjust, n=1, second_round
     # PART 2 GOES HERE - FILL IN BLANK SQUARES
     if second_round:
         all_dict = preprocess_db('../answers_cwg_otsys.txt')
-        domains,_,_ = generate_all_candidates(puz,limit,score_adjust,component_output)
+        domains = gen_blank_domain(solution, all_dict)
         orig = copy.deepcopy(solution)
-        solution = fill_blanks(solution, all_dict, puz, domains, neighbors)
+        solution = fill_blanks(solution, puz, domains, neighbors)
         for sq in orig:
             if orig[sq] != solution[sq]:
                 print orig[sq], 'vs', solution[sq]
