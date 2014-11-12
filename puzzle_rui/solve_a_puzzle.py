@@ -41,8 +41,9 @@ def solve_a_puzzle(puz_file, component_list_path,mode=1,limit=300,score_adjust=2
     return p.get_side_by_side_comparison(), solver_evaluation, comps_eval, solution
 
 if __name__ == "__main__":
-    if len(sys.argv) == 4:
-        res = solve_a_puzzle(sys.argv[1],sys.argv[2], n=int(sys.argv[3]))        
+    if 4 <= len(sys.argv) <= 5:
+        # if 5 args, we don't fill blanks
+        res = solve_a_puzzle(sys.argv[1],sys.argv[2], n=int(sys.argv[3]), second_round = False if len(sys.argv)==5 else True)
      
         res = res[:-1]
         print
