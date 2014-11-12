@@ -232,7 +232,7 @@ def solve_recursive(puz, variables, domains, neighbors, S, B, Pitched, n):
     next_var = None
     max2_diff = - float('Inf')
     for var in unassigned_vars:
-        if var in Pitched and set(domains[var]) == localPitched.get(var, set()):
+        if var in Pitched and set(domains[var]).issubset( localPitched.get(var, set()) ):
             continue
         values = [weight_dict[var][val] for val in domains[var]]
         if len(values) == 0:
@@ -295,7 +295,7 @@ def solve_puzzle(puz,component_output,mode,limit,score_adjust,second_round=True)
 
     print "\nSolving CSP probelm ....."
     start = time.time()
-    solution = solve_recursive(puz,variables,domains,neighbors,S, {}, {}, 3)
+    solution = solve_recursive(puz,variables,domains,neighbors,S, {}, {}, 2)
     end = time.time()
     print("\nCSP solver runtime: " + str(end-start))
 
