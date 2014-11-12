@@ -23,12 +23,15 @@ def print_dict(d,depth=0):
 
 def solve_a_puzzle(puz_file, component_list_path,mode=1,limit=300,score_adjust=20):
     print puz_file
-    all_output, comps_eval = pickle.load(open('interesult.dat'))
-#     all_output,comps_eval = components_eval.run_all_components(puz_file, component_list_path, False)
-#     print "####################### finished component ####################### "
-#     print "all_output", all_output raw_input('continue')
-#     print "comps_eval", comps_eval raw_input('continue')
-#     pickle.dump((all_output, comps_eval), open('interesult.dat', 'w'))
+    picklefile = puz_file.replace('.', '').replace('/', '') + '.dat'
+    try:
+        all_output, comps_eval = pickle.load(open(picklefile))
+    except IOError:
+        # doesn't exist
+        all_output,comps_eval = components_eval.run_all_components(puz_file, component_list_path, False)
+        pickle.dump((all_output, comps_eval), open(picklefile, 'w'))
+
+    print "####################### finished component ####################### "
     
     p = puzzle.Puzzle(puz_file)
     print p.get_initial_state()
