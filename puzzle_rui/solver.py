@@ -1,12 +1,10 @@
 #! /usr/bin/python
 
-## @package solver.py
-# Solves a puzzle using components to generate candidates
-#
-# Steve Wilson
-# Edited: Rui Zhang
-# Apr 2014
-# July 2014
+"""
+Linxi Fan
+lf2422
+Solves a puzzle using components to generate candidates
+"""
 
 import sys
 import re

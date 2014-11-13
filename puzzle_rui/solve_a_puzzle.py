@@ -1,6 +1,9 @@
 #! /usr/bin/python
 
 """
+Linxi Fan
+lf2422
+
 solve_a_puzzle.py
 
 Solves just one puzzle, prints the results
