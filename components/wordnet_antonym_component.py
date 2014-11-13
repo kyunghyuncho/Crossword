@@ -22,7 +22,7 @@ def get_answers(clue,answer_length,limit=100):
     p = re.compile(r'Lemma\(\'([A-Za-z]+)[.]')
     answers = set()
     for synset in wn.synsets(clue):
-        for lemma in synset.lemmas:
+        for lemma in synset.lemmas():
             antonyms = lemma.antonyms()
             for antonym in antonyms:
                 match = p.search(str(antonym))

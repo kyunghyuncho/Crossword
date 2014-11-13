@@ -17,26 +17,45 @@ from nltk.corpus import wordnet as wn
 #
 # @param clue the text of the clue to search for
 # @param answer_length length of the expected answer in the puzzle
-# @param limit number of responses to generate for each data source
-def get_answers(clue,answer_length,limit=100):
-    p = re.compile(r'Lemma\(\'([A-Za-z]+)[.]')
-    answers = set()
+def get_answers(clue,answer_length):
+    answers = []
+    print wn.synsets(clue)
+    max_disambig = 3  # maximum meaning disambiguation
     for synset in wn.synsets(clue):
-        for lemma in synset.lemmas:
-            antonyms = lemma.antonyms()
-            for antonym in antonyms:
-                match = p.search(str(antonym))
-                if match:
-                    answer = match.group(1)
-                    if len(answer) == int(answer_length):
-                        answers.add((answer.upper(),1))
-                        if len(answers) > limit:
-                            break
-            if len(answers) > limit:
-                break
-        if len(answers) > limit:
+        if max_disambig == 0:
             break
-    return answers
+        max_disambig -= 1
+        # maximum hypernym level
+        hyper_level = 4
+        for entry in synset.closure(lambda x : x.hypernyms()):
+            if hyper_level == 0:
+                break
+            hyper_level -= 1
+            answer = str(entry)[len('Synset(\'') : -2]
+            answer = answer.split('.')[0].replace('_', '')
+            if len(answer) == int(answer_length) or True:
+                answers.append(answer.upper())
+#         for lemma in synset.lemmas():
+#             hypers = lemma.hypernyms()
+#             for hyper in hypers:
+#                 match = p.search(str(hyper))
+#                 if match:
+#                     answer = match.group(1)
+#                     if len(answer) == int(answer_length):
+#                         answers.add((answer.upper(),1))
+#                         if len(answers) > limit:
+#                             break
+#             if len(answers) > limit:
+#                 break
+    answer_dict = {}
+    
+    unitscore = 3.0 / len(answers)
+    i = 1
+    for ans in reversed(answers):
+        answer_dict[ans] = unitscore * i
+        i += 1
+        
+    return answer_dict
 
 ## Process one line of either stdin or reading from a file
 #
@@ -62,9 +81,8 @@ def process_line(line):
             if match:
                 answers = get_answers(match.group(4),length)
                 if answers is not None:
-                    for answer in answers:
-                        word,score = answer
-                        print "\t".join([clueid,word,str(score)])
+                    for word in answers:
+                        print "\t".join([clueid,word,str(answers[word])])
 
 if __name__ == "__main__":
     if len(sys.argv) == 2:
