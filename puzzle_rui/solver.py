@@ -357,11 +357,11 @@ def solve_puzzle(puz,component_output,mode,limit,score_adjust, n=1, second_round
     if second_round:
         all_dict = preprocess_db('../answers_cwg_otsys.txt')
         domains = gen_blank_domain(solution, all_dict)
-        orig = copy.deepcopy(solution)
+#         orig = copy.deepcopy(solution)
         solution = fill_blanks(solution, puz, domains, neighbors)
-        for sq in orig:
-            if orig[sq] != solution[sq]:
-                print orig[sq], 'vs', solution[sq]
+#         for sq in orig:
+#             if orig[sq] != solution[sq]:
+#                 print orig[sq], 'vs', solution[sq]
         print "\nEvaluating filled solution ...."
         evaluation = puz.evaluate_solution(problem,solution,'_after_fill')
 
