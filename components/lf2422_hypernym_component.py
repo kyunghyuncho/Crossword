@@ -17,9 +17,9 @@ from nltk.corpus import wordnet as wn
 #
 # @param clue the text of the clue to search for
 # @param answer_length length of the expected answer in the puzzle
-def get_answers(clue,answer_length):
+# 'for example' questions
+def get_for_example(clue,answer_length):
     answers = []
-    print wn.synsets(clue)
     max_disambig = 3  # maximum meaning disambiguation
     for synset in wn.synsets(clue):
         if max_disambig == 0:
@@ -57,6 +57,11 @@ def get_answers(clue,answer_length):
         
     return answer_dict
 
+
+## and/or clue: Cronus and Hyperion
+def get_and_or(clue1, clue2, answer_length):
+    pass
+
 ## Process one line of either stdin or reading from a file
 #
 # @param line the line itself
@@ -67,22 +72,27 @@ def process_line(line):
             clueid,clue,length = line.split('\t')
         except Exception as e:
             print line
-        p = re.compile(r'^([A-Za-z]+)(([\'][s]){0,1}|([s][\']){0,1})\s(opposite|antonym)')
-        match = p.search(clue)
-        if match:
-            answers = get_answers(match.group(1),length)
-            if answers is not None:
-                for answer in answers:
-                    word,score = answer
-                    print "\t".join([clueid,word,str(score)])
-        else:
-            p = re.compile(r'^([Oo]pposite|[Aa]ntonym)\s(of|for)\s(\'|\"){0,1}([\w]+)(\'|\"){0,1}$')
-            match = p.search(clue)
-            if match:
-                answers = get_answers(match.group(4),length)
-                if answers is not None:
-                    for word in answers:
-                        print "\t".join([clueid,word,str(answers[word])])
+        
+        clue = clue.lower()
+        
+        # "for example" clue
+        matcher1 = re.compile(r"([\w\s]*\w)\s*,\s*for example")
+        m1 = matcher1.search(clue)
+        
+        # and/or clue
+        matcher2 = re.compile(r"([\w\s]*\w)\s+(and|or)\s+([\w\s]*\w)")
+        m2 = matcher2.search(clue)
+
+        answers = None
+        if m1 is not None:
+            answers = get_for_example(m1.group(1), length)
+        elif m2 is not None:
+            answers = get_and_or(m2.group(1), m2.group(3), length)
+            
+        if answers is not None:
+            for word in answers:
+                print "\t".join([clueid,word,str(answers[word])])
+
 
 if __name__ == "__main__":
     if len(sys.argv) == 2:
