@@ -14,7 +14,9 @@ for n in range(4):
                 continue
             fpath = rootDir + fname
             outname = 'hard_n' + str(n) + '.out'
-            outname = 'monday_n' + str(n) + '.out'
+            outname = 'monday_fillblank_n' + str(n) + '.out'
             cmd = 'python ./solve_a_puzzle.py ' + fpath + ' component_list ' + str(n) + ' no_second_round >> out/' + outname + ' 2>&1'
+            # we also fill blanks
+            cmd = 'python ./solve_a_puzzle.py ' + fpath + ' component_list ' + str(n) + ' >> out/' + outname + ' 2>&1'
             print cmd
             os.system(cmd)
