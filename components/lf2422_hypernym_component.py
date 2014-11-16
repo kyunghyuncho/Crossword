@@ -39,18 +39,7 @@ def get_for_example(clue,answer_length):
             for answer in answerlis:
                 if len(answer) == answer_length:
                     answers.append(answer.upper())
-#         for lemma in synset.lemmas():
-#             hypers = lemma.hypernyms()
-#             for hyper in hypers:
-#                 match = p.search(str(hyper))
-#                 if match:
-#                     answer = match.group(1)
-#                     if len(answer) == int(answer_length):
-#                         answers.add((answer.upper(),1))
-#                         if len(answers) > limit:
-#                             break
-#             if len(answers) > limit:
-#                 break
+
     if len(answers) == 0:
         return None
 
@@ -66,7 +55,16 @@ def get_for_example(clue,answer_length):
 
 ## and/or clue: Cronus and Hyperion
 def get_and_or(clue1, clue2, answer_length):
-    print "and_or:", clue1, clue2
+    c1ans = get_for_example(clue1, answer_length)
+    c2ans = get_for_example(clue2, answer_length)
+    if c1ans is None or c2ans is None:
+        return None
+    common_hyper = set(c1ans.keys()) & set(c2ans.keys())
+    if len(common_hyper) == 0:
+        return None
+    
+    return {common : c1ans[common] + c2ans[common] 
+            for common in common_hyper}
 
 ## Process one line of either stdin or reading from a file
 #
