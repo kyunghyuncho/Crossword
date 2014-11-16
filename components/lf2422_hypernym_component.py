@@ -32,9 +32,13 @@ def get_for_example(clue,answer_length):
                 break
             hyper_level -= 1
             answer = str(entry)[len('Synset(\'') : -2]
-            answer = answer.split('.')[0].replace('_', '')
-            if len(answer) == int(answer_length) or True:
-                answers.append(answer.upper())
+            answer = answer.split('.')[0]
+            answerlis = answer.split('_')
+            if len(answerlis) > 1:
+                answerlis = answerlis[1:] + [answer.replace('_', '')]
+            for answer in answerlis:
+                if len(answer) == answer_length:
+                    answers.append(answer.upper())
 #         for lemma in synset.lemmas():
 #             hypers = lemma.hypernyms()
 #             for hyper in hypers:
@@ -47,8 +51,10 @@ def get_for_example(clue,answer_length):
 #                             break
 #             if len(answers) > limit:
 #                 break
+    if len(answers) == 0:
+        return None
+
     answer_dict = {}
-    
     unitscore = 3.0 / len(answers)
     i = 1
     for ans in reversed(answers):
@@ -60,7 +66,7 @@ def get_for_example(clue,answer_length):
 
 ## and/or clue: Cronus and Hyperion
 def get_and_or(clue1, clue2, answer_length):
-    pass
+    print "and_or:", clue1, clue2
 
 ## Process one line of either stdin or reading from a file
 #
@@ -76,13 +82,14 @@ def process_line(line):
         clue = clue.lower()
         
         # "for example" clue
-        matcher1 = re.compile(r"([\w\s]*\w)\s*,\s*for example")
+        matcher1 = re.compile(r"([\w\s]*\w)\s*,\s*for\s+example")
         m1 = matcher1.search(clue)
         
         # and/or clue
         matcher2 = re.compile(r"([\w\s]*\w)\s+(and|or)\s+([\w\s]*\w)")
         m2 = matcher2.search(clue)
 
+        length = int(length)
         answers = None
         if m1 is not None:
             answers = get_for_example(m1.group(1), length)
