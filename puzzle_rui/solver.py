@@ -212,7 +212,7 @@ def propagate(next_var, next_val, puz, domains, neighbors, S):
     return True, next_domains, next_S
 
 
-# A crude search algorithm
+# A discrepancy-limited search algorithm
 def solve_recursive(puz, variables, domains, neighbors, S, B, Pitched, n):
     # print 'calling solve_recursive.....'
 
@@ -297,6 +297,9 @@ def preprocess_db(filename):
             all_dict[l] = [word]
     return all_dict
 
+## Further fill blanks with random letters
+# the probability of their appearance is proportional to their frequency
+# in "answers_cwg_otsys.txt" database
 def fill_frequency(S, puz,domains,neighbors, db):
     # frequency count
     histogram = {}
