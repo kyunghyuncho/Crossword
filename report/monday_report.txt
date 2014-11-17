@@ -1,0 +1,209 @@
+==================== out_old/monday_n0.out ====================
+---- FILE ----- ../monday_puzzles/May0514.puz
+total_words : 78.00
+runtime_before_fill : 0.57
+matching_words_before_fill : 72.00
+total_squares : 189.00
+matching_squares_before_fill : 183.00
+---- FILE ----- ../monday_puzzles/May1214.puz
+total_words : 78.00
+runtime_before_fill : 0.62
+matching_words_before_fill : 66.00
+total_squares : 187.00
+matching_squares_before_fill : 171.00
+---- FILE ----- ../monday_puzzles/May1914.puz
+total_words : 78.00
+runtime_before_fill : 0.41
+matching_words_before_fill : 52.00
+total_squares : 187.00
+matching_squares_before_fill : 147.00
+---- FILE ----- ../monday_puzzles/May2614.puz
+total_words : 76.00
+runtime_before_fill : 0.51
+matching_words_before_fill : 76.00
+total_squares : 188.00
+matching_squares_before_fill : 188.00
+==================== out_old/monday_n1.out ====================
+---- FILE ----- ../monday_puzzles/May0514.puz
+total_words : 78.00
+runtime_before_fill : 12.09
+matching_words_before_fill : 72.00
+total_squares : 189.00
+matching_squares_before_fill : 183.00
+---- FILE ----- ../monday_puzzles/May1214.puz
+total_words : 78.00
+runtime_before_fill : 12.14
+matching_words_before_fill : 71.00
+total_squares : 187.00
+matching_squares_before_fill : 182.00
+---- FILE ----- ../monday_puzzles/May1914.puz
+total_words : 78.00
+runtime_before_fill : 7.00
+matching_words_before_fill : 61.00
+total_squares : 187.00
+matching_squares_before_fill : 163.00
+---- FILE ----- ../monday_puzzles/May2614.puz
+total_words : 76.00
+runtime_before_fill : 9.36
+matching_words_before_fill : 76.00
+total_squares : 188.00
+matching_squares_before_fill : 188.00
+==================== out_old/monday_n2.out ====================
+---- FILE ----- ../monday_puzzles/May0514.puz
+total_words : 78.00
+runtime_before_fill : 206.63
+matching_words_before_fill : 72.00
+total_squares : 189.00
+matching_squares_before_fill : 183.00
+---- FILE ----- ../monday_puzzles/May1214.puz
+total_words : 78.00
+runtime_before_fill : 179.63
+matching_words_before_fill : 71.00
+total_squares : 187.00
+matching_squares_before_fill : 182.00
+---- FILE ----- ../monday_puzzles/May1914.puz
+total_words : 78.00
+runtime_before_fill : 100.32
+matching_words_before_fill : 64.00
+total_squares : 187.00
+matching_squares_before_fill : 174.00
+---- FILE ----- ../monday_puzzles/May2614.puz
+total_words : 76.00
+runtime_before_fill : 147.79
+matching_words_before_fill : 76.00
+total_squares : 188.00
+matching_squares_before_fill : 188.00
+==================== out_old/monday_n3.out ====================
+---- FILE ----- ../monday_puzzles/May0514.puz
+total_words : 78.00
+runtime_before_fill : 2941.32
+matching_words_before_fill : 72.00
+total_squares : 189.00
+matching_squares_before_fill : 183.00
+---- FILE ----- ../monday_puzzles/May1214.puz
+total_words : 78.00
+runtime_before_fill : 2304.85
+matching_words_before_fill : 71.00
+total_squares : 187.00
+matching_squares_before_fill : 182.00
+---- FILE ----- ../monday_puzzles/May1914.puz
+total_words : 78.00
+runtime_before_fill : 1310.37
+matching_words_before_fill : 64.00
+total_squares : 187.00
+matching_squares_before_fill : 174.00
+---- FILE ----- ../monday_puzzles/May2614.puz
+total_words : 76.00
+runtime_before_fill : 2077.26
+matching_words_before_fill : 76.00
+total_squares : 188.00
+matching_squares_before_fill : 188.00
+==================== out_old/monday_n4.out ====================
+---- FILE ----- ../monday_puzzles/May0514.puz
+total_words : 78.00
+runtime_before_fill : 35162.10
+matching_words_before_fill : 72.00
+total_squares : 189.00
+matching_squares_before_fill : 183.00
+---- FILE ----- ../monday_puzzles/May1214.puz
+total_words : 78.00
+runtime_before_fill : 26072.97
+matching_words_before_fill : 71.00
+total_squares : 187.00
+matching_squares_before_fill : 182.00
+---- FILE ----- ../monday_puzzles/May1914.puz
+total_words : 78.00
+runtime_before_fill : 15649.75
+matching_words_before_fill : 64.00
+total_squares : 187.00
+matching_squares_before_fill : 174.00
+---- FILE ----- ../monday_puzzles/May2614.puz
+total_words : 76.00
+runtime_before_fill : 26041.30
+matching_words_before_fill : 76.00
+total_squares : 188.00
+matching_squares_before_fill : 188.00
+==================== out_old/monday_fillblank_n0.out ====================
+---- FILE ----- ../monday_puzzles/May0514.puz
+matching_words_after_fill : 74.00
+matching_squares_after_fill : 185.00
+total_words : 78.00
+total_squares : 189.00
+---- FILE ----- ../monday_puzzles/May1214.puz
+matching_words_after_fill : 66.00
+matching_squares_after_fill : 172.00
+total_words : 78.00
+total_squares : 187.00
+---- FILE ----- ../monday_puzzles/May1914.puz
+matching_words_after_fill : 52.00
+matching_squares_after_fill : 147.00
+total_words : 78.00
+total_squares : 187.00
+---- FILE ----- ../monday_puzzles/May2614.puz
+matching_words_after_fill : 76.00
+matching_squares_after_fill : 188.00
+total_words : 76.00
+total_squares : 188.00
+==================== out_old/monday_fillblank_n1.out ====================
+---- FILE ----- ../monday_puzzles/May0514.puz
+matching_words_after_fill : 74.00
+matching_squares_after_fill : 185.00
+total_words : 78.00
+total_squares : 189.00
+---- FILE ----- ../monday_puzzles/May1214.puz
+matching_words_after_fill : 75.00
+matching_squares_after_fill : 185.00
+total_words : 78.00
+total_squares : 187.00
+---- FILE ----- ../monday_puzzles/May1914.puz
+matching_words_after_fill : 62.00
+matching_squares_after_fill : 164.00
+total_words : 78.00
+total_squares : 187.00
+---- FILE ----- ../monday_puzzles/May2614.puz
+matching_words_after_fill : 76.00
+matching_squares_after_fill : 188.00
+total_words : 76.00
+total_squares : 188.00
+==================== out_old/monday_fillblank_n2.out ====================
+---- FILE ----- ../monday_puzzles/May0514.puz
+matching_words_after_fill : 74.00
+matching_squares_after_fill : 185.00
+total_words : 78.00
+total_squares : 189.00
+---- FILE ----- ../monday_puzzles/May1214.puz
+matching_words_after_fill : 72.00
+matching_squares_after_fill : 183.00
+total_words : 78.00
+total_squares : 187.00
+---- FILE ----- ../monday_puzzles/May1914.puz
+matching_words_after_fill : 66.00
+matching_squares_after_fill : 176.00
+total_words : 78.00
+total_squares : 187.00
+---- FILE ----- ../monday_puzzles/May2614.puz
+matching_words_after_fill : 76.00
+matching_squares_after_fill : 188.00
+total_words : 76.00
+total_squares : 188.00
+==================== out_old/monday_fillblank_n3.out ====================
+---- FILE ----- ../monday_puzzles/May0514.puz
+matching_words_after_fill : 74.00
+matching_squares_after_fill : 185.00
+total_words : 78.00
+total_squares : 189.00
+---- FILE ----- ../monday_puzzles/May1214.puz
+matching_words_after_fill : 75.00
+matching_squares_after_fill : 185.00
+total_words : 78.00
+total_squares : 187.00
+---- FILE ----- ../monday_puzzles/May1914.puz
+matching_words_after_fill : 66.00
+matching_squares_after_fill : 176.00
+total_words : 78.00
+total_squares : 187.00
+---- FILE ----- ../monday_puzzles/May2614.puz
+matching_words_after_fill : 76.00
+matching_squares_after_fill : 188.00
+total_words : 76.00
+total_squares : 188.00
