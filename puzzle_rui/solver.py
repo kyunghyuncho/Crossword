@@ -297,6 +297,35 @@ def preprocess_db(filename):
             all_dict[l] = [word]
     return all_dict
 
+def fill_frequency(S, puz,domains,neighbors, db):
+    # frequency count
+    histogram = {}
+    for c in range(ord('A'), ord('Z')+1):
+        histogram[chr(c)] = 0
+    
+    for leng in db:
+        for word in db[leng]:
+            for c in word:
+                histogram[c] += 1
+    
+    # normalize to probability
+    sumhist = float(sum(histogram.values()))
+    histogram = {c : histogram[c] / sumhist for c in histogram}
+                
+    for sq in S:
+        if domains is None:
+            break
+        num_cand = len(domains[sq])
+        if num_cand == 0:
+            continue
+        freqchars = [c if histogram[c] < random.random() < histogram[c] else '-'
+                     for c in histogram]
+        fill_word = ''.join(freqchars)
+        success, domains, next_S = propagate(sq, fill_word, puz, domains, neighbors, S)
+        if success:
+            S = next_S
+    return S
+
 ## generate 'domain' of fill-blank
 def gen_blank_domain(S, all_dict):
     domain = {}
