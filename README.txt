@@ -1,7 +1,5 @@
 Linxi Fan
-lf2422
 
-=============== Problem 1 ===============
 Commandline:
 
 python solve_a_puzzle.py <XXX.puz> <component_list> <n> <don't_fill_blank>
@@ -26,7 +24,7 @@ deviates from the greedy "best" path. The usage of n forms a barrier
 against a full search of the tree, which can be explosively large.
 (reference: Dr. Fill paper)
 
-My own improvements:
+
 - If some squares are still not determined even after filling blanks, I will
   randomly assign letters to those squares as long as they are consistent
   with the "down" and "across" alignments. The letters are assigned with
@@ -66,7 +64,7 @@ n = 1: time = 9.4;  100.0%
 n = 2: time = 147.8;  100.0%
 n = 3: time = 1977.3;  100.0%
 
-=============== Problem 2 ===============
+
 
 My fill blank algorithm first processes the "answers_cwg_otsys.txt" and
 builds a hash dictionary. 
@@ -82,7 +80,7 @@ May1914 improves from 174/187 to 176/187
 
 The running time is almost not affected. 
 
-=============== Problem 3 ===============
+
 ===== Component 1 (designated) =====
 Hypernym (No. 16)
 "components/lf2422_hypernym_component.py"
@@ -119,6 +117,3 @@ Both components above do not yield a big improvement because of their
 rarity. In fact, the first component triggers only 4 instances in test_month
 and the second doesn't appear at all. The improvement is only around 2% in
 matched squares. 
-
-
-Thanks for reviewing my assignment!
