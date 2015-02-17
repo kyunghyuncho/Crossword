@@ -1,5 +1,3 @@
-#! /usr/bin/python
-
 """
 component_test.py
 

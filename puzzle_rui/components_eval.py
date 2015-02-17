@@ -1,4 +1,3 @@
-#! /usr/bin/python
 #chmod +x components_eval.py
 
 # evaluate all components that are specified in component list file
