@@ -24,7 +24,7 @@ def main(argv,
          model, 
          dictionary,
          embeddings,
-         max_n=100):
+         max_n=1000):
 
     # load model model_options
     with open('%s.pkl'%model, 'rb') as f:

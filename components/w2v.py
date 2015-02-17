@@ -22,7 +22,7 @@ from defgen_rev import build_fprop, \
 
 def main(argv,
          embeddings,
-         max_n=100):
+         max_n=1000):
 
     print >>sys.stderr, 'Loading skipgram vectors...',
     with open(embeddings, 'rb') as f:
