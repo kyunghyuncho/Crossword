@@ -1,5 +1,6 @@
 ../components/datamuse.py	0
-../components/rnn.py	    1
+../components/rnn.py	    0
+../components/w2v.py	    1
 ../components/lf2422_airport_component.py	0
 ../components/lf2422_hypernym_component.py	0
 ../components/state_capital_component.py	0
