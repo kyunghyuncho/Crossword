@@ -6,6 +6,9 @@ import theano
 from theano import tensor
 from theano.sandbox.rng_mrg import MRG_RandomStreams as RandomStreams
 
+from nltk.tokenize import wordpunct_tokenize
+
+
 import argparse
 
 import numpy
@@ -65,9 +68,9 @@ def main(argv,
                 print line
             
             clue = clue.lower()
+            words = wordpunct_tokenize(clue.strip())
             length = int(length)
 
-            words = clue.strip().split()
             seq = [worddict[w] if w in worddict else 1 for w in words] + [0]
 
             vec = f_prop(numpy.array(seq).reshape([len(seq),1]).astype('int64'),
