@@ -25,11 +25,10 @@ def get_answers(clue,answer_length):
         return None
 
     answer_dict = {}
-    unitscore = 3.0 / len(wordlist)
     i = 1
     for ii, s in enumerate(wordlist):
        if len(s['word']) == answer_length:
-           answer_dict[s['word']] = unitscore * i
+           answer_dict[s['word']] = s['score']
            i += 1
         
     return answer_dict
