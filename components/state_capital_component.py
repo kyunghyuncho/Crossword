@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#!/usr/local/bin/python
 
 # give capital of US state
 # e.g. 

@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#!/usr/local/bin/python
 
 # @package wordnet_antomym_component
 # Uses nltk's WordNet integration to find the antonym of a word for clues that look like 

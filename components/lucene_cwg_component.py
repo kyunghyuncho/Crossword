@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#!/usr/local/bin/python
 
 # @package lucene_component
 # Run's derek's lucene script (../derek/search_clues.bash)

@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#!/usr/local/bin/python
 """
 Linxi Fan
 lf2422

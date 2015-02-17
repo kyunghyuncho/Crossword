@@ -1,3 +1,4 @@
+#!/usr/local/bin/python
 from threading import Thread
 
 def foo(bar):

@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#!/usr/local/bin/python
 
 # @package fill_in_the_blank_component
 #  attempts to solve fill in the blank crossword clues
