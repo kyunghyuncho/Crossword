@@ -28,7 +28,7 @@ def generate_all_candidates(puz,limit,score_adjust,candidates_output=None):
     if candidates_output:
         data = candidates_output.split('\n')
     else:
-        data = sys.stdin()
+        data = sys.stdin
     answers_given = {}
     for line in data:
 #         print "line", line
